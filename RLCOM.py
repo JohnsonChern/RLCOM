@@ -86,11 +86,11 @@ def get_actions(state):
         state: a legal state in form of list
     """
     action = [0]
-    index = 0
     actions = []
     while True:
         curr_act = action[-1]
-        if curr_act + state[index] > C:
+        curr_index = len(action) - 1
+        if curr_act + state[curr_index + N] > C:
             action.pop()
             if len(action) > 0:
                 action[-1] += 1
@@ -99,7 +99,8 @@ def get_actions(state):
         elif len(action) < N:
             action.append(0)
         else:
-            heapq.heappush(actions, (-5 + np.random.normal(), list2str(action)))
+            if sum(action) == I:
+                heapq.heappush(actions, (-5 + np.random.normal(), list2str(action)))
             action[-1] += 1
     return actions
 
@@ -124,6 +125,9 @@ def init_table():
         elif len(state) == N:
             if sum(state[:N]) < I:
                 state[-1] += 1
+            elif sum(state[:N]) > I:
+                state.pop()
+                state[-1] += 1
             else:
                 state.append(0)
         elif len(state) < 2*N:
@@ -146,5 +150,7 @@ def reward(state, action):
 
 if __name__ == '__main__':
     Q = init_table()
-    print(len(Q))
-
+    num = 0
+    for key, value in Q.items():
+        num += len(value)
+    print(num)
