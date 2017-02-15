@@ -8,4 +8,5 @@ from RLCOM import *
 
 def experiment(epoch_num):
     Q = init_table()
-    
+    train(Q)
+
