@@ -192,6 +192,21 @@ def take_action(s_t, a_t):
     r_t1 = get_reward(s_t, a_t, s_t1)
     return r_t1, s_t1
 
+def random_state():
+    """
+    random_state: get a random state in string form and return it
+    """
+    rand_s = [0] * (2 * N)
+    BS = [i for i in range(N)]
+    for cu in range(I):
+        bs = BS[np.random.randint(0, len(BS))]
+        rand_s[bs] += 1
+        if rand_s[bs] == C:
+            BS.remove(bs)
+    for bs in range(N):
+        rand_s[bs + N] = np.random.randint(0, C - rand_s[bs] + 1)
+    return list2str(rand_s)
+
 def train_Q(Q):
     """
     train_Q: train the Q function in EPISODE_NUM episodes
@@ -200,7 +215,8 @@ def train_Q(Q):
     """
     for episode in range(EPISODE_NUM):
         # initiate a state and get its action sets
-        s_t, A_t = Q.items()[np.random.randint(0, len(Q))]
+        s_t = random_state()
+        A_t = Q[s_t]
 
         for t in range(STEP_NUM):
             # epsilon-greedily choose an action a_t from A_{s_t}
