@@ -5,6 +5,7 @@ RLCOM
 
 import numpy as np
 import heapq
+import csv
 
 """
 N: number of base stations
@@ -246,4 +247,9 @@ def train_Q(Q):
 if __name__ == '__main__':
     Q = init_table()
     train_Q(Q)
-    print(Q.items()[10])
+    filename = "./models/tabular_n4_c4_i8.txt"
+    with open(filename, 'w', newline='') as f:
+        for s, A_s in Q.items():
+            f.write(a)
+            for minus_q_s_a, a in A_s:
+                f.write(' {0} {1}'.format(str(minus_q_s_a), a)
