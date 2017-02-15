@@ -222,6 +222,10 @@ def train_Q(Q):
             s_t = s_t1
             A_t = Q[s_t1]
 
+            # print info
+            if (episode + 1) % 100 == 0:
+                print("Episode {0} done.".format(episode + 1))
+
 if __name__ == '__main__':
     Q = init_table()
     num = 0
