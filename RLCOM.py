@@ -228,7 +228,5 @@ def train_Q(Q):
 
 if __name__ == '__main__':
     Q = init_table()
-    num = 0
-    for key, value in Q.items():
-        num += len(value)
-    print(num)
+    train_Q(Q)
+    print(Q.items()[10])
