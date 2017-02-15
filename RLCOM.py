@@ -159,7 +159,8 @@ def get_reward(s_t, a_t, s_t1):
     for bs in range(N):
         i_n = int(s_t1[bs])
         o_n = int(s_t1[bs + N])
-        reward = (i_n + OMEGA * o_n) * np.log(1. / (i_n + o_n))
+        if i_n + o_n > 0:
+            reward += (i_n + OMEGA * o_n) * np.log(1. / (i_n + o_n))
 
     return reward
 
@@ -175,7 +176,7 @@ def redistribute_gu_uniform(s_mid):
     guest_users = []
     for n in range(N):
         guest_users.append(
-            np.rand.randint(0, N - int(s_mid[n]) + 1)
+            np.random.randint(0, N - int(s_mid[n]) + 1)
             )
     return s_mid[:N] + list2str(guest_users)
 
@@ -188,7 +189,7 @@ def take_action(s_t, a_t):
         s_t: state at time slot t, string format
         a_t: action at time slot t, string format
     """
-    s_t1 = redistribute_gu(a_t + s_t[N:])
+    s_t1 = redistribute_gu_uniform(a_t + s_t[N:])
     r_t1 = get_reward(s_t, a_t, s_t1)
     return r_t1, s_t1
 
@@ -239,8 +240,8 @@ def train_Q(Q):
             A_t = Q[s_t1]
 
             # print info
-            if (episode + 1) % 100 == 0:
-                print("Episode {0} done.".format(episode + 1))
+        if (episode + 1) % 100 == 0:
+            print("Episode {0} done.".format(episode + 1))
 
 if __name__ == '__main__':
     Q = init_table()
