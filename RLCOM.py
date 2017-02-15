@@ -252,4 +252,4 @@ if __name__ == '__main__':
         for s, A_s in Q.items():
             f.write(a)
             for minus_q_s_a, a in A_s:
-                f.write(' {0} {1}'.format(str(minus_q_s_a), a)
+                f.write(' {0} {1}'.format(str(minus_q_s_a), a))
