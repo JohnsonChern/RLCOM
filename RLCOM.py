@@ -3,9 +3,8 @@ RLCOM
 """
 # -*- coding: <utf-8> -*-
 
-import numpy as np
 import heapq
-import csv
+import numpy as np
 
 """
 N: number of base stations
@@ -222,14 +221,14 @@ def train_Q(Q):
 
         for t in range(STEP_NUM):
             # epsilon-greedily choose an action a_t from A_{s_t}
-            if np.random.rand() < EPSILON:
+            if np.random.random() < EPSILON:
                 action_index = np.random.randint(len(A_t))
             else:
                 # greedily choose the best action in current situation
                 action_index = 0
             minus_q_s_a, a_t = A_t[action_index]
-            q_s_a =  -minus_q_s_a
-            
+            q_s_a = -minus_q_s_a
+
             # take action a_t and observe r_{t+1} and s_{t+1}
             r_t1, s_t1 = take_action(s_t, a_t)
             new_q_s_a = q_s_a + ALPHA * (r_t1 - GAMMA * Q[s_t1][0][0] - q_s_a)
@@ -250,6 +249,8 @@ if __name__ == '__main__':
     filename = "./models/tabular_n4_c4_i8.txt"
     with open(filename, 'w', newline='') as f:
         for s, A_s in Q.items():
-            f.write(a)
+            f.write(s)
             for minus_q_s_a, a in A_s:
                 f.write(' {0} {1}'.format(str(minus_q_s_a), a))
+            f.write('\n')
+
