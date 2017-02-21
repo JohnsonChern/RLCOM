@@ -240,8 +240,11 @@ def train_Q(Q):
             A_t = Q[s_t1]
 
             # print info
-        if (episode + 1) % 100 == 0:
+        if (episode + 1) % 10000 == 0:
             print("Episode {0} done.".format(episode + 1))
+            A_0 = list(Q.values())[0]
+            print("A reward is {0}".format(r_t1))
+            print(A_0)
 
 if __name__ == '__main__':
     Q = init_table()
